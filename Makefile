@@ -2,11 +2,11 @@
 
 all: run
 
-run: cmd/main/main.go
+run: cmd/main/meta.go
 	@go run $<
 
 resolve: scripts/resolve.sh
 	@sh $<
 
-build: cmd/main/main.go
+build: cmd/main/meta.go
 	@go build $<
