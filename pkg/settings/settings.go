@@ -5,6 +5,8 @@ import (
 	"github.com/solo-kingdom/meta/pkg/constants"
 	"github.com/solo-kingdom/meta/pkg/utils"
 	"log"
+	"os"
+	"path"
 )
 
 type Server struct {
@@ -33,6 +35,11 @@ func SetUp() {
 
 	for section := range SectionConfig {
 		mapTo(section, SectionConfig[section])
+	}
+
+	mh := os.Getenv("META_HOME")
+	if len(mh) > 0 {
+		AppConfig.UploadPath = path.Join(mh, "upload")
 	}
 
 	err = utils.EnsureDir(AppConfig.UploadPath)

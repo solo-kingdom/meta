@@ -9,8 +9,9 @@ import (
 func GetRouter() *gin.Engine {
 	r := gin.New()
 
-	r.GET("info", api.Info)
-	r.POST("upload", api.Upload)
+	r.GET("/info", api.Info)
+	r.POST("/upload/:space", api.Upload)
+	r.GET("/d/:space/:file", api.Download)
 	apiV1 := r.Group("api/v1")
 	{
 		apiV1.GET("version", v1.Version)
