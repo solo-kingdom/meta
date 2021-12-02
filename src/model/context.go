@@ -6,10 +6,11 @@ type Ctx struct {
 	C *gin.Context
 }
 
-func (c *Ctx) Response(err Status, data interface{}) {
-	c.C.JSON(err.HttpCode, Response{
-		Code:    err.Code,
-		Message: err.Message,
+func (c *Ctx) Response(status Status, data interface{}) {
+	c.C.JSON(status.HttpCode, Response{
+		Code:    status.Code,
+		Success: status.Success,
+		Message: status.Message,
 		Data:    data,
 	})
 }
