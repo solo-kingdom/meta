@@ -3,6 +3,7 @@ module github.com/solo-kingdom/meta
 go 1.16
 
 require (
+	github.com/dgraph-io/badger/v3 v3.2103.2 // indirect
 	github.com/gin-gonic/gin v1.7.7
 	github.com/go-ini/ini v1.66.0 // indirect
 	github.com/go-playground/validator/v10 v10.9.0 // indirect

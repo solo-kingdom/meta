@@ -10,6 +10,6 @@ type Status struct {
 
 var (
 	Success    = Status{HttpCode: http.StatusOK, Code: 20000, Message: "success"}
-	Error      = Status{HttpCode: http.StatusInternalServerError, Code: 50000, Message: "server error"}
+	Error      = Status{HttpCode: http.StatusInternalServerError, Code: 50000, Message: "server e"}
 	BadRequest = Status{HttpCode: http.StatusBadRequest, Code: 40000, Message: "bad request"}
 )
