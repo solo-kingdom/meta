@@ -14,13 +14,28 @@ type KVData struct {
 func Get(ctx *gin.Context) {
 	c := model.Ctx{C: ctx}
 	data := KVData{}
-	if err := ctx.BindJSON(&data); err != nil || len(data.Key) == 0 {
-		c.Response(model.BadRequest, nil)
-		return
+
+	data.Key = ctx.Param("key")
+	if len(data.Key) == 0 {
+		if err := ctx.BindJSON(&data); err != nil || len(data.Key) == 0 {
+			c.Response(model.BadRequest, nil)
+			return
+		}
 	}
-	v, _ := service.Get(data.Key)
-	data.Value = v
-	c.Response(model.Success, data)
+
+	if len(data.Key) == 0 {
+		c.Response(model.BadRequest, nil)
+	}
+
+	exists, v, err := service.Get(data.Key)
+	if !exists {
+		c.Response(model.NotFound, nil)
+	} else if err != nil {
+		c.Response(model.Error, nil)
+	} else {
+		data.Value = v
+		c.Response(model.Success, data)
+	}
 }
 
 func Set(ctx *gin.Context) {

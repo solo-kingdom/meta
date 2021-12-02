@@ -1,21 +1,31 @@
 package service
 
 import (
+	"errors"
 	"github.com/dgraph-io/badger/v3"
 	"github.com/solo-kingdom/meta/pkg/global"
 )
 
-func Get(key string) (string, error) {
-	var res []byte
+func Get(key string) (bool, string, error) {
+	var res *[]byte
 	err := global.GV.KV.View(func(txn *badger.Txn) error {
-		item, _ := txn.Get([]byte(key))
-		_ = item.Value(func(val []byte) error {
-			res = val
-			return nil
-		})
-		return nil
+		var err error
+		if item, err := txn.Get([]byte(key)); err == nil {
+			return item.Value(func(val []byte) error {
+				res = &val
+				return nil
+			})
+		}
+		return err
 	})
-	return string(res[:]), err
+	if err != nil {
+		return false, "", err
+	}
+	if res == nil {
+		return false, "", errors.New("")
+	}
+
+	return true, string((*res)[:]), err
 }
 
 func Set(key string, value string) error {

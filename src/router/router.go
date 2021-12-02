@@ -13,6 +13,7 @@ func GetRouter() *gin.Engine {
 	r.POST("/upload/:space", api.Upload)
 	r.GET("/d/:space/:file", api.Download)
 	r.GET("/kv", api.Get)
+	r.GET("/kv/:key", api.Get)
 	r.POST("/kv", api.Set)
 
 	apiV1 := r.Group("api/v1")
