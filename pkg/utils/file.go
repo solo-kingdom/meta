@@ -6,7 +6,7 @@ import (
 )
 
 func EnsureDir(dirName string) error {
-	err := os.Mkdir(dirName, os.ModePerm)
+	err := os.MkdirAll(dirName, os.ModePerm)
 	if err == nil {
 		return nil
 	}
