@@ -49,9 +49,15 @@ func SetUp() {
 	}
 
 	err = utils.EnsureDir(AppConfig.UploadPath)
+	if err != nil {
+		log.Fatalf("set up upload path failed. [UploadPath=%v, error=%v]",
+			AppConfig.UploadPath, err.Error())
+	}
+
 	err = utils.EnsureDir(AppConfig.KVPath)
 	if err != nil {
-		log.Fatalf("set up upload path failed. [UploadPath=%v]", AppConfig.UploadPath)
+		log.Fatalf("set up kv path failed. [UploadPath=%v, error=%v]",
+			AppConfig.KVPath, err.Error())
 	}
 
 	// init kv instance
