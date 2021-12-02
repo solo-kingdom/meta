@@ -2,6 +2,7 @@ package api
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/solo-kingdom/meta/pkg/error"
 	"github.com/solo-kingdom/meta/pkg/settings"
 	"github.com/solo-kingdom/meta/pkg/utils"
 	"github.com/solo-kingdom/meta/src/model"
@@ -15,7 +16,7 @@ func Upload(ctx *gin.Context) {
 	c := model.Ctx{C: ctx}
 	file, err := ctx.FormFile("file")
 	if err != nil || file == nil {
-		log.Printf("parse upload request failed. [error=%v]", err.Error())
+		log.Printf("parse upload request failed. [error=%v]", error.ErrMsg(err))
 		c.Response(model.BadRequest, nil)
 		return
 	}
@@ -49,7 +50,7 @@ func Download(ctx *gin.Context) {
 	fp := path.Join(settings.AppConfig.UploadPath, ctx.Param("space"), ctx.Param("file"))
 	file, err := os.Open(fp)
 	if err != nil || file == nil {
-		log.Printf("open file failed. [error=%v]", err.Error())
+		log.Printf("open file failed. [error=%v]", error.ErrMsg(err))
 	}
 	defer func(file *os.File) {
 		_ = file.Close()
