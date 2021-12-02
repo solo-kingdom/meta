@@ -28,7 +28,7 @@ func Get(ctx *gin.Context) {
 	}
 
 	exists, v, err := service.Get(data.Key)
-	if !exists {
+	if !exists && err == nil {
 		c.Response(model.NotFound, nil)
 	} else if err != nil {
 		c.Response(model.Error, nil)

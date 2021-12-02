@@ -1,7 +1,6 @@
 package service
 
 import (
-	"errors"
 	"github.com/dgraph-io/badger/v3"
 	"github.com/solo-kingdom/meta/pkg/global"
 )
@@ -18,11 +17,13 @@ func Get(key string) (bool, string, error) {
 		}
 		return err
 	})
+
 	if err != nil {
 		return false, "", err
 	}
+
 	if res == nil {
-		return false, "", errors.New("")
+		return false, "", nil
 	}
 
 	return true, string((*res)[:]), err
