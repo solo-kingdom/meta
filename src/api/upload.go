@@ -56,4 +56,5 @@ func Download(ctx *gin.Context) {
 	}(file)
 	ctx.Writer.Header().Add("Content-type", "application/octet-stream")
 	_, err = io.Copy(ctx.Writer, file)
+	ctx.Done()
 }
