@@ -43,7 +43,6 @@ func Upload(ctx *gin.Context) {
 }
 
 func Download(ctx *gin.Context) {
-	c := model.Ctx{C: ctx}
 	log.Printf("download file. [space=%s, file=%s]",
 		ctx.Param("space"), ctx.Param("file"))
 
@@ -57,5 +56,4 @@ func Download(ctx *gin.Context) {
 	}(file)
 	ctx.Writer.Header().Add("Content-type", "application/octet-stream")
 	_, err = io.Copy(ctx.Writer, file)
-	c.Response(model.Success, nil)
 }
